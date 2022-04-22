@@ -1,0 +1,279 @@
+\documentclass[a5paper, landscape,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[landscape]{geometry}
+\usepackage{xparse}
+\usepackage{xcolor}
+\usepackage{sectsty}
+\usepackage{titlesec}
+\usepackage{tikz}
+
+\usetikzlibrary{shapes,snakes}
+
+\renewcommand*\rmdefault{phv}
+
+\tikzstyle{degreeBox} = [very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+
+\definecolor{redDegree}{rgb}{1.0, 0.1, 0.1}
+\definecolor{orangeDegree}{rgb}{1.0, 0.5, 0.0}
+\definecolor{yellowDegree}{rgb}{0.9, 0.7, 0.2}
+\definecolor{greenDegree}{rgb}{0.0, 0.7, 0.1}
+\definecolor{blueDegree}{rgb}{0.1, 0.1, 0.9}
+\definecolor{whiteDegree}{rgb}{1.0, 1.0, 1.0}
+\definecolor{subsection}{rgb}{0,0,0}
+\definecolor{pagecolor}{rgb}{1,1,1}
+\definecolor{textcolor}{rgb}{0.2,0.2,0.2}
+\definecolor{textcolor2}{rgb}{1,1,1}
+\definecolor{shadowColor}{rgb}{0.3,0.3,0.3}
+
+\titlespacing*{\subsection}{0pt}{0mm}{0mm}
+%\titleformat{\subsection}{\color{subsection}\fontfamily{phv}\fontsize{20}{17}\bfseries}{\thesubsection}{1em}{} % Title (Prinzipien + Praktiken)
+\titlespacing*{\subsubsection}{0pt}{0mm}{0mm}
+
+\pagecolor{pagecolor}
+
+\clearpage
+
+\DeclareDocumentCommand \degreesection { m m o } {
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}}; % Hintergrund auf jeder Seite
+
+		\node [shift={(-5 cm,-5cm)}]  at (current page.north east)
+		{
+			\begin{tikzpicture}[remember picture, overlay]
+			\draw [draw=pagecolor, fill=#2] (0, 5) -- (1.25, 5) -- (5, 1.25) -- (5, 0) -- cycle ;
+			\draw [draw=shadowColor, fill=shadowColor] (0, 4.9) -- (0.1, 4.9) -- (4.9, 0.1) -- (4.9, 0) -- cycle ;
+			\node[shift={(2.8cm,2.8cm)}, rotate=-45] {
+				\huge \fontfamily{phv} \color{\IfNoValueTF{#3}{textcolor}{#3}} \textbf{#1}
+			};
+			\end{tikzpicture}
+		};
+	\end{tikzpicture}
+	\titleformat{\subsection}{\color{#2}\fontfamily{phv}\fontsize{18}{15}\bfseries}{\thesubsection}{1em}{} % Title (Prinzipien + Praktiken
+	\titleformat{\subsubsection}{\fontfamily{phv}\fontsize{11}{15}\bfseries}{\thesubsubsection}{1em}{} % Einzelne Überschriften (DRY, KISS....)
+}
+
+\DeclareDocumentCommand \degreesectionTwo { m m o } {
+	\begin{tikzpicture}[remember picture, overlay]
+		
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}};
+		\node [shift={(-5 cm,-5cm)}]  at (current page.north east)
+		{
+			\begin{tikzpicture}[remember picture, overlay]
+			\draw [draw=pagecolor, fill=#2] (0, 5) -- (1.25, 5) -- (5, 1.25) -- (5, 0) -- cycle ;
+			\draw [draw=shadowColor, fill=shadowColor] (0, 4.9) -- (0.1, 4.9) -- (4.9, 0.1) -- (4.9, 0) -- cycle ;
+			\node[shift={(2.8cm,2.8cm)}, rotate=-45] {
+				\huge \fontfamily{phv} \color{\IfNoValueTF{#3}{textcolor2}{#3}} \textbf{#1}
+			};
+			\end{tikzpicture}
+		};
+	\end{tikzpicture}
+	\titleformat{\subsubsection}{\color{#2}\fontfamily{phv}\fontsize{11}{15}\bfseries}{\thesubsubsection}{1em}{}
+}
+\begin{document}
+	\pagenumbering{gobble}
+	\footnotesize
+	\color{textcolor}
+
+	\begin{titlepage}
+		\begin{tikzpicture}[remember picture, overlay]
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}};
+		\end{tikzpicture}
+		\centering\Huge Clean Code Cheat Sheet
+		\newline
+		\centering\Large SEITENBAU
+	\end{titlepage}
+	
+	\newpage
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}};
+	\end{tikzpicture}
+	\newpage
+	\degreesection{Roter Grad}{redDegree}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Prinzipien}
+		\subsubsection*{Don't Repeat Yourself (DRY)}
+		Jede Doppelung von Code oder auch nur Handgriffen leistet Inkonsistenzen und Fehlern Vorschub.
+		\subsubsection*{Keep it simple, stupid (KISS)}
+		Wer mehr tut als das Einfachste, lässt den Kunden warten und macht die Lösung unnötig kompliziert.
+		\subsubsection*{Vorsicht vor Optimierungen}
+		Optimierungen kosten immer viel Aufwand. Wer Vorsicht walten lässt, spart oft wertvolle Ressourcen für das, was dem Kunden wirklich nützt.
+		\subsubsection*{Composition over Inheritance}
+		Komposition fördert die lose Kopplung und die Testbarkeit eines Systems und ist oft flexibler.
+		\subsubsection*{Integration Operation Segregation\\Principle (IOSP)}
+		Ein deutliches Symptom schlecht wandelbaren Codes sind tiefe Hierarchien funktionaler Abhängigkeit. Sie reduzieren die Verständlichkeit und erschweren automatisierte Tests wie Refactoring.
+	\end{minipage}
+	\hspace{0.5cm}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Praktiken}
+		\subsubsection*{Die Pfadfinderregel beachten}
+		Jede Beschäftigung mit einem Gegenstand macht ihn zumindest ein klein wenig besser. Ganz ohne bürokratische Planung. %Fundament und Graswurzelansatz für mehr Qualität.
+		\subsubsection*{Root Cause Analysis}
+		Symptome behandeln bringt vielleicht schnell eine Linderung – langfristig kostet es aber mehr Aufwand. Wer stattdessen unter die Oberfläche von Problemen schaut, arbeitet am Ende effizenter.
+		\subsubsection*{Ein Versionskontrollsystem einsetzen}
+		Angst vor Beschädigung eines „running system“ lähmt die Softwareentwicklung. Mit einer Versionsverwaltung ist solche Angst unbegründet.
+		\subsubsection*{Einfache Refaktorisierungsmuster anwenden}
+		Code verbessern ist leichter, wenn man typische Verbesserungshandgriffe kennt. Ihre Anwendungsszenarien machen sensibel für Schwachpunkte im eigenen Code. Als anerkannte Muster stärken sie den Mut, sie anzuwenden.
+		\subsubsection*{Täglich reflektieren}
+		Keine Verbesserung, kein Fortschritt, kein Lernen ohne Reflexion. Aber nur, wenn Reflexion auch eingeplant wird, findet sie unter dem Druck des Tagesgeschäftes auch statt.
+	\end{minipage}
+
+	\newpage
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}};
+	\end{tikzpicture}
+
+
+	\newpage
+	\degreesection{Oranger Grad}{orangeDegree}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Prinzipien}
+		\subsubsection*{Single Level of Abstraction (SLA)}
+		Die Einhaltung eines Abstraktionsniveaus fördert die Lesbarkeit.
+		\subsubsection*{Single Responsibility Principle (SRP)}
+		Fokus erleichtert das Verständnis. Eine Klasse mit genau einer Aufgabe ist verständlicher als ein Gemischtwarenladen.
+		\subsubsection*{Separation of Concerns (SoC)}
+		Wenn eine Codeeinheit keine klare Aufgabe hat ist es schwer sie zu verstehen, sie anzuwenden und sie ggf. zu korrigieren oder zu erweitern.
+		\subsubsection*{Source Code Konventionen}
+		Code wird häufiger gelesen als geschrieben. Daher sind Konventionen wichtig, die ein schnelles Lesen und Erfassen des Codes unterstützen.
+	\end{minipage}
+	\hspace{0.5cm}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Praktiken}
+		\subsubsection*{Issue Tracking}
+		Nur, was man aufschreibt, vergisst man nicht und kann man effektiv delegieren und verfolgen.
+		\subsubsection*{Automatisierte Integrationstests}
+		Integrationstests stellen sicher dass der Code tut was er soll. Diese wiederkehrende Tätigkeit nicht zu automatisieren wäre Zeitverschwendung.
+		\subsubsection*{Lesen, Lesen, Lesen}
+		Lesen bildet!
+	\end{minipage}
+
+	\newpage
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}};
+	\end{tikzpicture}
+	
+
+	\newpage
+	\degreesection{Gelber Grad}{yellowDegree}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Prinzipien}
+		\subsubsection*{Interface Segregation Principle (ISP)}
+		Leistungsbeschreibungen, die unabhängig von einer konkreten Erfüllung sind, machen unabhängig.
+		\subsubsection*{Dependency Inversion Principle}
+		Punktgenaues Testen setzt Isolation von Klassen voraus. Isolation entsteht, wenn Klassen keine Abhängigkeiten von Implementationen mehr enthalten – weder zur Laufzeit, noch zur Übersetzungszeit. Konkrete Abhängigkeiten sollten deshalb so spät wie möglich entschieden werden. Am besten zur Laufzeit.
+		\subsubsection*{Liskov Substitution Principle}
+		Wer mit Erben zu tun hat, möchte keine Überraschungen erleben, wenn er mit Erblassern vertraut ist.
+		\subsubsection*{Principle of Least Astonishment}
+		Wenn sich eine Komponente überraschenderweise anders verhält als erwartet, wird ihre Anwendung unnötig kompliziert und fehleranfällig.
+		\subsubsection*{Information Hiding Principle}
+		Durch das Verbergen von Details in einer Schnittstelle werden die Abhängigkeiten reduziert.
+	\end{minipage}
+	\hspace{0.5cm}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Praktiken}
+		\subsubsection*{Automatisierte Unit Tests}
+		Nur automatisierte Tests werden auch wirklich konsequent ausgeführt. Je punktgenauer sie Code testen, desto besser.
+		\subsubsection*{Mockups (Testattrappen)}
+		Ohne Attrappen keine einfach kontrollierbaren Tests.
+		\subsubsection*{Code Coverage Analyse}
+		Traue nur Tests, von denen du weißt, dass sie auch wirklich das Testareal abdecken.
+		\subsubsection*{Teilnahme an Fachveranstaltungen}
+		Am besten lernen wir von anderen und in Gemeinschaft.
+		\subsubsection*{Komplexe Refaktorisierungen}
+		Es ist nicht möglich, Code direkt in der ultimativen Form zu schreiben.
+	\end{minipage}
+
+	\newpage
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}};
+	\end{tikzpicture}
+		
+
+	\newpage
+	\degreesection{Grüner Grad}{greenDegree}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Prinzipien}
+		\subsubsection*{Open Closed Principle}
+		Weil das Risiko, durch neue Features ein bisher fehlerfreies System zu instabilisieren, so gering wie möglich gehalten werden sollte.
+		\subsubsection*{Tell, don't ask}
+		Hohe Kohäsion und lose Kopplung sind Tugenden. Öffentliche Zustandsdetails einer Klasse widersprechen dem.
+		\subsubsection*{Law of Demeter}
+		Abhängigkeiten von Objekten über mehrere Glieder einer Dienstleistungskette hinweg führen zu unschön enger Kopplung.	
+	\end{minipage}
+	\hspace{0.5cm}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Praktiken}
+		\subsubsection*{Continuous Integration}
+		Automatisierung und Zentralisierung der Softwareproduktion machen produktiver und reduzieren das Risiko von Fehlern bei der Auslieferung.
+		\subsubsection*{Statische Codeanalyse (Metriken)}
+		Vertrauen ist gut, Kontrolle ist besser – und je automatischer, desto leichter ist sie.
+		\subsubsection*{Inversion of Control Container}
+		Nur, was nicht fest verdrahtet ist, kann leichter umkonfiguriert werden.
+		\subsubsection*{Erfahrung weitergeben}
+		Wer sein Wissen weitergibt, hilft nicht nur anderen, sondern auch sich selbst.
+		\subsubsection*{Messen von Fehlern}
+		Nur wer weiß, wie viele Fehler auftreten, kann sein Vorgehen so verändern, dass die Fehlerrate sinkt.
+	\end{minipage}
+
+	\newpage
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}};
+	\end{tikzpicture}
+
+
+	\newpage
+	\degreesectionTwo{Blauer Grad}{blueDegree}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Prinzipien}
+		\subsubsection*{Entwurf und Implementation überlappen nicht}
+		Planungsunterlagen, die mit der Umsetzung nichts mehr gemein haben, schaden mehr, als dass sie nützen. Deshalb nicht die Planung aufgeben, sondern die Chance auf Inkonsistenz minimieren.
+		\subsubsection*{Implementation spiegelt Entwurf}
+		Umsetzung, die von der Planung beliebig abweichen kann, führt direkt in die Unwartbarkeit. Umsetzung braucht daher einen durch die Planung vorgegebenen physischen Rahmen.
+		\subsubsection*{You Ain't Gonna Need It (YAGNI)}
+		Dinge die niemand braucht, haben keinen Wert. Verschwende an sie also keine Zeit.
+	\end{minipage}
+	\hspace{0.5cm}
+	\begin{minipage}[t]{.5\textwidth}
+		\subsection*{Praktiken}
+		\subsubsection*{Continuous Delivery}
+		Als Clean Code Developer möchte ich sicher sein, dass ein Setup das Produkt korrekt installiert. Wenn ich das erst beim Kunden herausfinde, ist es zu spät.
+		\subsubsection*{Iterative Entwicklung}
+		Frei nach von Clausewitz: Kein Entwurf, keine Implementation überlebt den Kontakt mit dem Kunden. Softwareentwicklung tut daher gut daran, ihren Kurs korrigieren zu können.
+		\subsubsection*{Komponentenorientierung}
+		Software braucht Black-Box-Bausteine, die sich parallel entwickeln und testen lassen. Das fördert Evolvierbarkeit, Produktivität und Korrektheit.
+		\subsubsection*{Test first}
+		Der Kunde ist König und bestimmt die Form einer Dienstleistung. Service-Implementationen sind also nur passgenau, wenn sie durch einen Client getrieben werden.
+	\end{minipage}
+
+	\newpage
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}};
+	\end{tikzpicture}
+
+
+	\newpage
+	\degreesection{Weißer Grad}{whiteDegree}[black]
+	\subsubsection*{} Mit dem weißen Grad schließt sich der Kreis. Er vereinigt alle Prinzipien und Praktiken der farbigen Grade. Sein Horizont sind alle Bausteine zusammen. Wer den weißen Grad erreicht hat, arbeitet ständig an allen Facetten des Wertesystems. Da solche gleichschwebende Aufmerksamkeit jedoch schwer herzustellen ist, erwarten wir, dass der Clean Code Developer nach einiger Zeit wieder mit der Arbeit im Gradesystem von vorne beginnt.
+
+	\newpage
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{Bild1.jpg}};
+	\end{tikzpicture}
+
+\end{document}
+
+
+		%\begin{itemize}
+		%	\item Dopplung von Code/Handgriffen begünstigt Inkonsistenzen/Fehler
+		%	\item Erkennen von sich wiederholendem Code oder anderen Artefakten, die man selbst oderandere erzeugt haben
+		%	\item Bereinigen durch Refaktorisierung
+		%	\item Auch unter Zeitdruck
+		%\end{itemize}
+
+		%\begin{itemize}
+		%	\item Wer mehr tut als das einfachste, lässt den Kunden warten und macht die Lösung unnötig kompliziert
+		%	\item Für die Evolvierbarkeit muss der Code verständlich sein
+		%	\item Reviews und Pairprogramming zur Kontrolle
+		%\end{itemize}
